@@ -15,7 +15,7 @@ const uri = `mongodb+srv://${userName}:${passWord}@cluster.syod2ua.mongodb.net/?
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: 
     true, serverApi: ServerApiVersion.v1 });
 
-const portNumber = 4000;
+const portNumber = process.env.PORT || 4000;
 
 app.set("views", path.resolve(__dirname, "templates"));
 app.set("view engine", "ejs");
@@ -25,6 +25,11 @@ app.use(bodyParser.urlencoded({extended:false}));
 process.stdin.setEncoding('utf-8');
 
 /*Routes*/
+
+app.get('/', (req, res) => {
+    res.send('connected to server');
+});
+
 app.post('/contact', async (req, res) => {
     const variables = {
         name: req.body.name,
